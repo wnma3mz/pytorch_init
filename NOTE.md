@@ -39,7 +39,69 @@ https://www.rogoso.info/optim-method/
 
 ### Numpy to PyTorch
 
-https://www.pytorchtutorial.com/pytorch-for-numpy-users/
+此部分参考https://www.pytorchtutorial.com/pytorch-for-numpy-users/
+
+| Numpy            | PyTorch |
+| ---------------- | ------- |
+| np.less          | x.lt    |
+| np.less_equal    | x.le    |
+| np.greater       | x.gt    |
+| np.greater_equal | x.ge    |
+| np.equal         | x.eq    |
+| np.not_equal     | x.ne    |
+| x.min       | x.min                          |
+| x.argmin    | x.argmin                       |
+| x.max       | x.max                          |
+| x.argmax    | x.argmax                       |
+| x.clip      | x.clamp                        |
+| x.round     | x.round                        |
+| np.floor(x) | torch.floor(x); x.floor()      |
+| np.ceil(x)  | torch.ceil(x); x.ceil()        |
+| x.trace     | x.trace                        |
+| x.sum       | x.sum                          |
+| x.cumsum    | x.cumsum                       |
+| x.mean      | x.mean                         |
+| x.std       | x.std                          |
+| x.prod      | x.prod                         |
+| x.cumprod   | x.cumprod                      |
+| x.all       | (x == 1).sum() == x.nelement() |
+| x.any       | (x == 1).sum() > 0             |
+| np.put                                                  |                                                              |
+| x.put                                                   | x.put_                                                       |
+| x = np.array([1, 2, 3])x.repeat(2) # [1, 1, 2, 2, 3, 3] | x = torch.tensor([1, 2, 3])x.repeat(2) # [1, 2, 3, 1, 2, 3]x.repeat(2).reshape(2, -1).transpose(1, 0).reshape(-1) # [1, 1, 2, 2, 3, 3] |
+| np.tile(x, (3, 2))                                      | x.repeat(3, 2)                                               |
+| np.choose                                               |                                                              |
+| np.sort                                                 | sorted, indices = torch.sort(x, [dim])                       |
+| np.argsort                                              | sorted, indices = torch.sort(x, [dim])                       |
+| np.nonzero                                              | torch.nonzero                                                |
+| np.where                                                | torch.where                                                  |
+| x[::-1]                                                 |                                                              |
+| x.reshape                              | x.reshape; x.view        |
+| x.resize()                             | x.resize_                |
+|                                        | x.resize_as_             |
+| x.transpose                            | x.transpose or x.permute |
+| x.flatten                              | x.view(-1)               |
+| x.squeeze()                            | x.squeeze()              |
+| x[:, np.newaxis]; np.expand_dims(x, 1) | x.unsqueeze(1)           |
+| x.shape   | x.shape      |
+| x.strides | x.stride()   |
+| x.ndim    | x.dim()      |
+| x.data    | x.data       |
+| x.size    | x.nelement() |
+| x.dtype   | x.dtype      |
+| np.array([[1, 2], [3, 4]])                                   | torch.tensor([[1, 2], [3, 4]])                |
+| np.array([3.2, 4.3], dtype=np.float16)np.float16([3.2, 4.3]) | torch.tensor([3.2, 4.3], dtype=torch.float16) |
+| x.copy()                                                     | x.clone()                                     |
+| np.fromfile(file)                                            | torch.tensor(torch.Storage(file))             |
+| np.frombuffer                                                |                                               |
+| np.fromfunction                                              |                                               |
+| np.fromiter                                                  |                                               |
+| np.fromstring                                                |                                               |
+| np.load                                                      | torch.load                                    |
+| np.loadtxt                                                   |                                               |
+| np.concatenate                                               | torch.cat                                     |
+
+### Tf to PyTorch
 
 ```python
 import tensorflow as tf
