@@ -50,6 +50,7 @@ if __name__ == '__main__':
     """
     方式一，推荐
     save网络参数
+    本质上net.state_dict()是有序字典，因此可以手动修改参数
     torch.save(net.state_dict(), fname)
     载入模型
     net.load_state_dict(torch.load(fname))
@@ -64,8 +65,9 @@ if __name__ == '__main__':
     fine-tuning 模型
     net = resnet50(pretrained=True)
     net.cuda()
-    # 修改最后一层全连接层，xxx可保持不变. num_classes输出需对应分类数目，比如cifar10为10，cifar100为100
-    net.fc = Linear(xxx, num_classes)
+    # 修改最后一层全连接层,in_features保持不变. num_classes输出需对应分类数目，比如cifar10为10，cifar100为100
+    num_fits = net.fc.in_features
+    net.fc = Linear(num_fits, num_classes)
     """
 
     # 损失函数
