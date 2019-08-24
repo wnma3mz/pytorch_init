@@ -44,12 +44,30 @@ if __name__ == '__main__':
 
     # 定义模型
     net = resnet50()
-    net = nn.DataParallel(net, device_ids=device_ids)
+    net.cuda()
+    # 并行方式
+    # net = nn.DataParallel(net, device_ids=device_ids)
     """
-    # 载入模型
-    net.load_state_dict(torch.load('ResNet-cifar100/net_001.pth'))
-    net = net.cuda()
+    方式一，推荐
+    save网络参数
+    torch.save(net.state_dict(), fname)
+    载入模型
+    net.load_state_dict(torch.load(fname))
+
+    方式二
+    save网络结构和参数
+    torch.save(net, fname)
+    net = torch.load(fname)
     """
+    
+    """
+    fine-tuning 模型
+    net = resnet50(pretrained=True)
+    net.cuda()
+    # 修改最后一层全连接层，xxx可保持不变. num_classes输出需对应分类数目，比如cifar10为10，cifar100为100
+    net.fc = Linear(xxx, num_classes)
+    """
+
     # 损失函数
     criterion = nn.CrossEntropyLoss()
     # 优化器
