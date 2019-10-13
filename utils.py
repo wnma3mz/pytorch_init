@@ -67,11 +67,12 @@ def evlation(net, testloader, device):
             _, predicted = torch.max(outputs.data, 1)
             total += labels.size(0)  # 总样本数
             correct += (predicted == labels).sum().item()  # 预测正确数
+    acc = 100 * correct / total
 
-    print('Acc: {}'.format(100 * correct / total))
+    print('Acc: {}'.format(acc))
     time_end = time.time()
     print('Time cost:', time_end - time_start, "s")
-
+    return acc
 
 def evaluate(test_loader,
              model,

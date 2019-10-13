@@ -15,9 +15,12 @@ from torch.utils.data import DataLoader
 
 from utils import get_dataset, evlation
 
+# 环境变量屏蔽gpu
+os.environ["CUDA_VISIBLE_DEVICES"] = '4' 
+
 # 指定gpu
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-device_ids = [0, 1, 2, 3, 4]
+# device_ids = [0, 1, 2, 3, 4]
 
 
 def update_optim(params, lr, momentum, weight_decay):
@@ -78,6 +81,7 @@ if __name__ == '__main__':
                           momentum=momentum,
                           weight_decay=weight_decay)
 
+    acc = 0.
     for epoch in range(num_epoch):
         s1 = time.time()
         net.train()
@@ -103,9 +107,11 @@ if __name__ == '__main__':
               (epoch + 1, (i + 1) * batch_size, loss.item(), e1 - s1))
 
 
-        evlation(net, testloader, device)
+        acc_now = evlation(net, testloader, device)
+        if acc_now > acc:
+            acc = acc_now
+            fname = '%s/best.pth' % (model_name + '-' + dataset_name)
+            torch.save(net.state_dict(), fname)
 
-        print('Saving model......')
-        fname = '%s/net_%03d.pth' % (model_name + '-' + dataset_name,
-                                        epoch + 1)
+        fname = '%s/new.pth' % (model_name + '-' + dataset_name)
         torch.save(net.state_dict(), fname)
